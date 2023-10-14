@@ -151,9 +151,7 @@ export const showGameover = () => {
   const score = yurts.length * 2 + animals.length;
   uiContainer.style.zIndex = '';
 
-  if (score > localStorage.getItem('Tiny Yurts')) {
-    localStorage.setItem('Tiny Yurts', score);
-  }
+  window.highscores.setScore(score);
 
   menuBackground.style.clipPath = `polygon(0 0, 100% 0, 100% 100%, 0 100%)`;
   menuBackground.style.transition = `opacity 2s 1s`;

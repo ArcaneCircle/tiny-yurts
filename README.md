@@ -1,25 +1,19 @@
 # Tiny Yurts
 
-<img src="https://github.com/burntcustard/tiny-yurts/blob/main/screenshot-bigx2.png?raw=true" width="400" alt="Screenshot of the game, showing a green background, with small dots and other simple shapes representing paths, animals, trees, and a pond."/>
+<img src=".public/icon.png" width="400" alt="Game icon"/>
 
-### [Play online](https://burnt.io/tiny-yurts/)
-
-> A web game inspired by [Dinosaur Polo Club's](https://dinopoloclub.com/) [Mini Motorways](https://dinopoloclub.com/games/mini-motorways/), created for [Js13kGames](https://js13kgames.com/) 2023  
-> \- the total size of the [zipped](dist/game.zip) [index.html](dist/index.html) is under 13,312B!
+> A web game inspired by [Dinosaur Polo Club's](https://dinopoloclub.com/) [Mini Motorways](https://dinopoloclub.com/games/mini-motorways/)
 
 ### How to play
 
 - Touch or left click and drag to build paths between your yurts and farms to keep the animals happy!
 - You get points for your total number of settlers (2x your number of yurts), plus a point for each animal.
-- __Fullscreen__ is highly recommended for mobile.
+- __Landscape__ is highly recommended for mobile.
 
 ### Tech used
 - All the graphics are SVG-based, with CSS transitions and transforms. There is no canvas, and there are no asset files. It's HTML-CSS-SVG-in-JS all the way down.
-- JavaScript packer [Roadroller](https://lifthrasiir.github.io/roadroller/) by [Kang Seonghoon](https://mearie.org/).
 - [Kontra.js](https://straker.github.io/kontra/) game engine by [Steven Lambert](https://stevenklambert.com/).
 - [Karplus-Strong](https://en.wikipedia.org/wiki/Karplus%E2%80%93Strong_string_synthesis) via the [Web Audio API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API), from [xem's](https://xem.github.io/) [MiniSynth](https://github.com/xem/js1k19/blob/gh-pages/miniSynth/index.html), based on [Keith Horwood's](https://keithwhor.com/) [audiosynth](https://github.com/keithwhor/audiosynth).
-- [JSZip](https://stuk.github.io/jszip/) _and_ [advzip-bin](https://github.com/elliot-nelson/advzip-bin) for zip compression.
-- [Vite](https://vitejs.dev/) and [Terser](https://terser.org/) with a messy, unstable, project-specific [custom plugin](plugins/vite-js13k.js) for maximum minification.
 
 ### Tips & Tricks
 <details>
@@ -40,18 +34,54 @@
 </p>
 </details>
 
-### Run locally
+## Contributing
 
-1. Clone this repository  
-   `git clone git@github.com:burntcustard/tiny-yurts.git`
+### Installing Dependencies
 
-2. Install dependencies  
-  `npm install`
+After cloning this repo, install dependecies:
 
-3. Run dev command to start up hot-reloading with [Vite](https://vitejs.dev/) at [localhost:3000](http://localhost:3000/)  (you will need to open that URL yourself!)  
-  `npm run dev`
+```
+pnpm i
+```
 
-4. Compile the output [index.html](dist/index.html) file and [game.zip]((dist/game.zip)) files (this will take a minute or two!)  
-   `npm run build`
+### Checking code format
 
-5. See [package.json](package.json) for other scripts
+```
+pnpm check
+```
+
+### Testing the app in the browser
+
+To test your work in your browser (with hot reloading!) while developing:
+
+```
+pnpm dev-mini
+# Alternatively to test in a more advanced WebXDC emulator:
+pnpm dev
+```
+
+### Building
+
+To package the WebXDC file:
+
+```
+pnpm build
+```
+
+To package the WebXDC with developer tools inside to debug in Delta Chat, set the `NODE_ENV`
+environment variable to "debug":
+
+```
+NODE_ENV=debug pnpm build
+```
+
+The resulting optimized `.xdc` file is saved in `dist-xdc/` folder.
+
+### Releasing
+
+To automatically build and create a new GitHub release with the `.xdc` file:
+
+```
+git tag -a v1.0.1
+git push origin v1.0.1
+```

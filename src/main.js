@@ -1,3 +1,4 @@
+import "webxdc-scores";
 import { GameLoop } from './modified-kontra/game-loop';
 import {
   svgElement, gridWidth, gridHeight, boardOffsetX, boardOffsetY,
@@ -36,6 +37,8 @@ import {
 import { colors } from './colors';
 import { trees } from './tree';
 import { initAudio, soundSetings, playSound } from './audio';
+
+await window.highscores.init("Tiny Yurts");
 
 let updateCount = 0;
 let renderCount = 0;
