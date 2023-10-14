@@ -52,7 +52,7 @@ export const playSound = (
       : ((v[p] =
           v[p >= v.length - 1 ? 0 : p + 1] * 0.5 +
           v[p] * (0.5 - pingyness / 1000)),
-          // v[p >= v.length - 1 ? 0 : p + 1]
+        // v[p >= v.length - 1 ? 0 : p + 1]
         p >= Math.floor(period) &&
           ((reset = true), (v[p + 1] = v[0] * 0.5 + v[p + 1] * 0.5)),
         (p = reset ? 0 : p + 1),
