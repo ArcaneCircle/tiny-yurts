@@ -1,6 +1,6 @@
 # Tiny Yurts
 
-<img src=".public/icon.png" width="400" alt="Game icon"/>
+<img src="./public/icon.png" width="400" alt="Game icon"/>
 
 > A web game inspired by [Dinosaur Polo Club's](https://dinopoloclub.com/) [Mini Motorways](https://dinopoloclub.com/games/mini-motorways/)
 
