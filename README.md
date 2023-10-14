@@ -8,14 +8,16 @@
 
 - Touch or left click and drag to build paths between your yurts and farms to keep the animals happy!
 - You get points for your total number of settlers (2x your number of yurts), plus a point for each animal.
-- __Landscape__ is highly recommended for mobile.
+- **Landscape** is highly recommended for mobile.
 
 ### Tech used
+
 - All the graphics are SVG-based, with CSS transitions and transforms. There is no canvas, and there are no asset files. It's HTML-CSS-SVG-in-JS all the way down.
 - [Kontra.js](https://straker.github.io/kontra/) game engine by [Steven Lambert](https://stevenklambert.com/).
 - [Karplus-Strong](https://en.wikipedia.org/wiki/Karplus%E2%80%93Strong_string_synthesis) via the [Web Audio API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API), from [xem's](https://xem.github.io/) [MiniSynth](https://github.com/xem/js1k19/blob/gh-pages/miniSynth/index.html), based on [Keith Horwood's](https://keithwhor.com/) [audiosynth](https://github.com/keithwhor/audiosynth).
 
 ### Tips & Tricks
+
 <details>
 <summary>(Click to show - minor spoilers)</summary>  
 <p>

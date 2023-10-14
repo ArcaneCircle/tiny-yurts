@@ -1,13 +1,11 @@
-import { GameObjectClass } from './modified-kontra/game-object';
-import { createSvgElement } from './svg-utils';
-import { gridCellSize } from './svg';
-import {
-  baseLayer, yurtLayer, yurtAndPersonShadowLayer,
-} from './layers';
-import { Path, drawPaths, getPathsData } from './path';
-import { colors } from './colors';
-import { Person } from './person';
-import { playYurtSpawnNote } from './audio';
+import { GameObjectClass } from "./modified-kontra/game-object";
+import { createSvgElement } from "./svg-utils";
+import { gridCellSize } from "./svg";
+import { baseLayer, yurtLayer, yurtAndPersonShadowLayer } from "./layers";
+import { Path, drawPaths, getPathsData } from "./path";
+import { colors } from "./colors";
+import { Person } from "./person";
+import { playYurtSpawnNote } from "./audio";
 
 export const yurts = [];
 
@@ -25,10 +23,12 @@ export class Yurt extends GameObjectClass {
 
     super(properties);
 
-    this.points = [{
-      x: this.x,
-      y: this.y,
-    }];
+    this.points = [
+      {
+        x: this.x,
+        y: this.y,
+      },
+    ];
 
     setTimeout(() => {
       this.startPath = new Path({
@@ -67,13 +67,16 @@ export class Yurt extends GameObjectClass {
       y: y - this.y,
     };
 
-    const oldPathsInPathData = getPathsData().filter((p) => p.path === this.startPath
-      || p.path1 === this.startPath
-      || p.path2 === this.startPath);
+    const oldPathsInPathData = getPathsData().filter(
+      (p) =>
+        p.path === this.startPath ||
+        p.path1 === this.startPath ||
+        p.path2 === this.startPath,
+    );
 
     oldPathsInPathData.forEach((p) => {
-      p.svgElement.setAttribute('stroke-width', 0);
-      p.svgElement.setAttribute('opacity', 0);
+      p.svgElement.setAttribute("stroke-width", 0);
+      p.svgElement.setAttribute("opacity", 0);
 
       setTimeout(() => {
         p.svgElement.remove();
@@ -96,7 +99,13 @@ export class Yurt extends GameObjectClass {
     });
 
     // Redraw
-    drawPaths({ changedCells: [{ x: this.x, y: this.y, fixed: true }, { x, y }], fadeout: true });
+    drawPaths({
+      changedCells: [
+        { x: this.x, y: this.y, fixed: true },
+        { x, y },
+      ],
+      fadeout: true,
+    });
 
     // I think this slowed down the drawing of the path slightly but seems not needed
     // const pathInPathData = pathsData.find(p => p.path === this.startPath);
@@ -117,66 +126,66 @@ export class Yurt extends GameObjectClass {
     const x = gridCellSize / 2 + this.x * gridCellSize;
     const y = gridCellSize / 2 + this.y * gridCellSize;
 
-    const baseShadow = createSvgElement('circle');
-    baseShadow.setAttribute('fill', colors.shade);
-    baseShadow.setAttribute('r', 0);
-    baseShadow.setAttribute('stroke', 'none');
-    baseShadow.setAttribute('transform', `translate(${x},${y})`);
+    const baseShadow = createSvgElement("circle");
+    baseShadow.setAttribute("fill", colors.shade);
+    baseShadow.setAttribute("r", 0);
+    baseShadow.setAttribute("stroke", "none");
+    baseShadow.setAttribute("transform", `translate(${x},${y})`);
     baseShadow.style.willChange = `r, opacity`;
     baseShadow.style.opacity = 0;
     baseShadow.style.transition = `all .4s`;
     baseLayer.append(baseShadow);
     setTimeout(() => {
-      baseShadow.setAttribute('r', 3);
+      baseShadow.setAttribute("r", 3);
       baseShadow.style.opacity = 1;
     }, 100);
-    setTimeout(() => baseShadow.style.willChange = '', 600);
+    setTimeout(() => (baseShadow.style.willChange = ""), 600);
 
-    this.svgGroup = createSvgElement('g');
+    this.svgGroup = createSvgElement("g");
     this.svgGroup.style.transform = `translate(${x}px,${y}px)`;
     yurtLayer.append(this.svgGroup);
 
-    this.circle = createSvgElement('circle');
-    this.circle.style.transition = 'r.4s';
-    this.circle.style.willChange = 'r';
-    setTimeout(() => this.circle.setAttribute('r', 3), 400);
-    setTimeout(() => this.circle.style.willChange = '', 900);
+    this.circle = createSvgElement("circle");
+    this.circle.style.transition = "r.4s";
+    this.circle.style.willChange = "r";
+    setTimeout(() => this.circle.setAttribute("r", 3), 400);
+    setTimeout(() => (this.circle.style.willChange = ""), 900);
 
-    this.shadow = createSvgElement('path');
-    this.shadow.setAttribute('d', 'M0 0 0 0');
-    this.shadow.setAttribute('stroke-width', 6);
+    this.shadow = createSvgElement("path");
+    this.shadow.setAttribute("d", "M0 0 0 0");
+    this.shadow.setAttribute("stroke-width", 6);
     this.shadow.style.transform = `translate(${x}px,${y}px)`;
     this.shadow.style.opacity = 0;
-    this.shadow.style.willChange = 'd';
-    this.shadow.style.transition = 'd.6s';
+    this.shadow.style.willChange = "d";
+    this.shadow.style.transition = "d.6s";
     yurtAndPersonShadowLayer.append(this.shadow);
-    setTimeout(() => this.shadow.style.opacity = 0.8, 800);
-    setTimeout(() => this.shadow.setAttribute('d', 'M0 0 2 2'), 900);
-    setTimeout(() => this.shadow.style.willChange = '', 1600);
+    setTimeout(() => (this.shadow.style.opacity = 0.8), 800);
+    setTimeout(() => this.shadow.setAttribute("d", "M0 0 2 2"), 900);
+    setTimeout(() => (this.shadow.style.willChange = ""), 1600);
 
-    this.decoration = createSvgElement('circle');
-    this.decoration.setAttribute('fill', 'none');
-    this.decoration.setAttribute('r', 1);
-    this.decoration.setAttribute('stroke-dasharray', 6.3); // Math.PI * 2 + a bit
-    this.decoration.setAttribute('stroke-dashoffset', 6.3);
-    this.decoration.setAttribute('stroke', this.type);
-    this.decoration.style.willChange = 'stroke-dashoffset';
+    this.decoration = createSvgElement("circle");
+    this.decoration.setAttribute("fill", "none");
+    this.decoration.setAttribute("r", 1);
+    this.decoration.setAttribute("stroke-dasharray", 6.3); // Math.PI * 2 + a bit
+    this.decoration.setAttribute("stroke-dashoffset", 6.3);
+    this.decoration.setAttribute("stroke", this.type);
+    this.decoration.style.willChange = "stroke-dashoffset";
     this.decoration.style.transition = `stroke-dashoffset .5s`;
 
     this.svgGroup.append(this.circle, this.decoration);
 
-    setTimeout(() => this.decoration.setAttribute('stroke-dashoffset', 0), 700);
-    setTimeout(() => this.decoration.style.willChange = '', 1300);
+    setTimeout(() => this.decoration.setAttribute("stroke-dashoffset", 0), 700);
+    setTimeout(() => (this.decoration.style.willChange = ""), 1300);
   }
 
   lift() {
     const x = gridCellSize / 2 + this.x * gridCellSize;
     const y = gridCellSize / 2 + this.y * gridCellSize;
 
-    this.shadow.style.transition = 'transform.2s d.3s';
-    this.shadow.setAttribute('d', 'M0 0l3 3');
+    this.shadow.style.transition = "transform.2s d.3s";
+    this.shadow.setAttribute("d", "M0 0l3 3");
 
-    this.svgGroup.style.transition = 'transform.2s';
+    this.svgGroup.style.transition = "transform.2s";
     this.svgGroup.style.transform = `translate(${x}px,${y}px) scale(1.1)`;
   }
 
@@ -184,11 +193,11 @@ export class Yurt extends GameObjectClass {
     const x = gridCellSize / 2 + this.x * gridCellSize;
     const y = gridCellSize / 2 + this.y * gridCellSize;
 
-    this.shadow.style.transition = 'transform.3s d.4s';
-    this.shadow.setAttribute('d', 'M0 0 2 2');
+    this.shadow.style.transition = "transform.3s d.4s";
+    this.shadow.setAttribute("d", "M0 0 2 2");
     this.shadow.style.transform = `translate(${x}px,${y}px) scale(1)`;
 
-    this.svgGroup.style.transition = 'transform.3s';
+    this.svgGroup.style.transition = "transform.3s";
     this.svgGroup.style.transform = `translate(${x}px,${y}px) scale(1)`;
   }
 }

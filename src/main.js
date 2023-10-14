@@ -1,42 +1,73 @@
 import "webxdc-scores";
-import { GameLoop } from './modified-kontra/game-loop';
+import { GameLoop } from "./modified-kontra/game-loop";
 import {
-  svgElement, gridWidth, gridHeight, boardOffsetX, boardOffsetY,
-} from './svg';
-import { initPointer } from './pointer';
-import { oxFarms } from './ox-farm';
-import { goatFarms } from './goat-farm';
-import { fishFarms } from './fish-farm';
-import { people } from './person';
-import { inventory } from './inventory';
+  svgElement,
+  gridWidth,
+  gridHeight,
+  boardOffsetX,
+  boardOffsetY,
+} from "./svg";
+import { initPointer } from "./pointer";
+import { oxFarms } from "./ox-farm";
+import { goatFarms } from "./goat-farm";
+import { fishFarms } from "./fish-farm";
+import { people } from "./person";
+import { inventory } from "./inventory";
 // We import a huge amount from UI, & should probably use more of it inside itself rather than here
 import {
   // eslint-disable-next-line max-len
-  initUi, scoreCounters, goatCounter, goatCounterWrapper, oxCounter, oxCounterWrapper, fishCounter, fishCounterWrapper, pathTilesIndicator, pathTilesIndicatorCount, clock, clockHand, clockMonth, pauseButton, pauseSvgPath, gridToggleButton, gridRedToggleButton, soundToggleButton, soundToggleTooltip, soundToggleSvgPathX, gridRedToggleTooltip, gridToggleTooltip,
-} from './ui';
-import { farms } from './farm';
-import { svgPxToDisplayPx } from './cell';
-import { spawnNewObjects } from './spawning';
-import { animals } from './animal';
-import { oxen } from './ox';
-import { goats } from './goat';
-import { fishes } from './fish';
-import { ponds } from './pond';
-import { yurts } from './yurt';
-import { paths } from './path';
-import { clearLayers } from './layers';
-import { initMenuBackground } from './menu-background';
+  initUi,
+  scoreCounters,
+  goatCounter,
+  goatCounterWrapper,
+  oxCounter,
+  oxCounterWrapper,
+  fishCounter,
+  fishCounterWrapper,
+  pathTilesIndicator,
+  pathTilesIndicatorCount,
+  clock,
+  clockHand,
+  clockMonth,
+  pauseButton,
+  pauseSvgPath,
+  gridToggleButton,
+  gridRedToggleButton,
+  soundToggleButton,
+  soundToggleTooltip,
+  soundToggleSvgPathX,
+  gridRedToggleTooltip,
+  gridToggleTooltip,
+} from "./ui";
+import { farms } from "./farm";
+import { svgPxToDisplayPx } from "./cell";
+import { spawnNewObjects } from "./spawning";
+import { animals } from "./animal";
+import { oxen } from "./ox";
+import { goats } from "./goat";
+import { fishes } from "./fish";
+import { ponds } from "./pond";
+import { yurts } from "./yurt";
+import { paths } from "./path";
+import { clearLayers } from "./layers";
+import { initMenuBackground } from "./menu-background";
 import {
-  initGameover, showGameover, hideGameover, toggleGameoverlayButton,
-} from './gameover';
-import { initMenu, showMenu, hideMenu } from './menu';
-import { updateGridData } from './find-route';
+  initGameover,
+  showGameover,
+  hideGameover,
+  toggleGameoverlayButton,
+} from "./gameover";
+import { initMenu, showMenu, hideMenu } from "./menu";
+import { updateGridData } from "./find-route";
 import {
-  gridLockToggle, gridRedLockToggle, gridRedHide, gridRedState,
-} from './grid-toggle';
-import { colors } from './colors';
-import { trees } from './tree';
-import { initAudio, soundSetings, playSound } from './audio';
+  gridLockToggle,
+  gridRedLockToggle,
+  gridRedHide,
+  gridRedState,
+} from "./grid-toggle";
+import { colors } from "./colors";
+import { trees } from "./tree";
+import { initAudio, soundSetings, playSound } from "./audio";
 
 await window.highscores.init("Tiny Yurts");
 
@@ -72,20 +103,27 @@ const loop = GameLoop({
         pauseButton.style.opacity = 1;
       }
 
-      if (totalUpdateCount % (720 * 12) === 0 && inventory.paths < 99) { // 720
+      if (totalUpdateCount % (720 * 12) === 0 && inventory.paths < 99) {
+        // 720
         pathTilesIndicator.style.scale = 1.1;
 
-        pathTilesIndicatorCount.innerText = '+9';
+        pathTilesIndicatorCount.innerText = "+9";
 
-        setTimeout(() => pathTilesIndicatorCount.innerText = inventory.paths, 1300);
+        setTimeout(
+          () => (pathTilesIndicatorCount.innerText = inventory.paths),
+          1300,
+        );
 
         for (let i = 0; i < 9; i++) {
-          setTimeout(() => {
-            if (inventory.paths < 99) {
-              inventory.paths++;
-              pathTilesIndicatorCount.innerText = inventory.paths;
-            }
-          }, 1300 + 100 * i);
+          setTimeout(
+            () => {
+              if (inventory.paths < 99) {
+                inventory.paths++;
+                pathTilesIndicatorCount.innerText = inventory.paths;
+              }
+            },
+            1300 + 100 * i,
+          );
         }
 
         setTimeout(() => {
@@ -111,29 +149,29 @@ const loop = GameLoop({
       // }
       // Converted to from switch to if () for better compression
       if (Math.floor((totalUpdateCount / 720) % 12) === 0) {
-        clockMonth.innerText = 'Jan';
+        clockMonth.innerText = "Jan";
       } else if (Math.floor((totalUpdateCount / 720) % 12) === 1) {
-        clockMonth.innerText = 'Feb';
+        clockMonth.innerText = "Feb";
       } else if (Math.floor((totalUpdateCount / 720) % 12) === 2) {
-        clockMonth.innerText = 'Mar';
+        clockMonth.innerText = "Mar";
       } else if (Math.floor((totalUpdateCount / 720) % 12) === 3) {
-        clockMonth.innerText = 'Apr';
+        clockMonth.innerText = "Apr";
       } else if (Math.floor((totalUpdateCount / 720) % 12) === 4) {
-        clockMonth.innerText = 'May';
+        clockMonth.innerText = "May";
       } else if (Math.floor((totalUpdateCount / 720) % 12) === 5) {
-        clockMonth.innerText = 'Jun';
+        clockMonth.innerText = "Jun";
       } else if (Math.floor((totalUpdateCount / 720) % 12) === 6) {
-        clockMonth.innerText = 'Jul';
+        clockMonth.innerText = "Jul";
       } else if (Math.floor((totalUpdateCount / 720) % 12) === 7) {
-        clockMonth.innerText = 'Aug';
+        clockMonth.innerText = "Aug";
       } else if (Math.floor((totalUpdateCount / 720) % 12) === 8) {
-        clockMonth.innerText = 'Sep';
+        clockMonth.innerText = "Sep";
       } else if (Math.floor((totalUpdateCount / 720) % 12) === 9) {
-        clockMonth.innerText = 'Oct';
+        clockMonth.innerText = "Oct";
       } else if (Math.floor((totalUpdateCount / 720) % 12) === 10) {
-        clockMonth.innerText = 'Nov';
+        clockMonth.innerText = "Nov";
       } else {
-        clockMonth.innerText = 'Dec';
+        clockMonth.innerText = "Dec";
       }
     }
 
@@ -166,7 +204,8 @@ const loop = GameLoop({
       oxFarms.forEach((farm) => farm.update(gameStarted, totalUpdateCount));
     } else if (updateCount % 4 === 2) {
       goatFarms.forEach((farm) => farm.update(gameStarted, totalUpdateCount));
-    } else { // 3
+    } else {
+      // 3
       fishFarms.forEach((farm) => farm.update(gameStarted, totalUpdateCount));
     }
 
@@ -247,7 +286,9 @@ const startNewGame = () => {
     gameStarted = true;
 
     svgElement.style.transition = `transform 2s`;
-    svgElement.style.transform = `rotate(0) scale(2) translate(0, ${svgPxToDisplayPx(0, gridHeight).y / -2}px)`;
+    svgElement.style.transform = `rotate(0) scale(2) translate(0, ${
+      svgPxToDisplayPx(0, gridHeight).y / -2
+    }px)`;
 
     soundToggleButton.style.transition = `all .2s, width.5s 4s, opacity .5s 3s`;
     gridRedToggleButton.style.transition = `all .2s, width.5s 4s, opacity .5s 3s`;
@@ -273,7 +314,7 @@ const startNewGame = () => {
     pauseButton.style.opacity = 0;
 
     toggleGameoverlayButton.style.opacity = 0;
-    toggleGameoverlayButton.style.pointerEvents = 'none';
+    toggleGameoverlayButton.style.pointerEvents = "none";
     toggleGameoverlayButton.style.transition = `all .2s, opacity .5s`;
 
     setTimeout(() => {
@@ -297,7 +338,7 @@ const startNewGame = () => {
       pathTilesIndicatorCount.innerText = inventory.paths;
       clearLayers();
       hideGameover();
-      svgElement.style.transform = '';
+      svgElement.style.transform = "";
 
       setTimeout(() => {
         spawnNewObjects(0);
@@ -311,7 +352,9 @@ const gameoverToMenu = () => {
   gameStarted = false;
 
   svgElement.style.transition = `transform 2s`;
-  svgElement.style.transform = `rotate(0) scale(2) translate(0, ${svgPxToDisplayPx(0, gridHeight).y / -2}px)`;
+  svgElement.style.transform = `rotate(0) scale(2) translate(0, ${
+    svgPxToDisplayPx(0, gridHeight).y / -2
+  }px)`;
 
   inventory.paths = 18;
 
@@ -326,7 +369,7 @@ const gameoverToMenu = () => {
   fishCounter.innerText = 0;
 
   toggleGameoverlayButton.style.opacity = 0;
-  toggleGameoverlayButton.style.pointerEvents = 'none';
+  toggleGameoverlayButton.style.pointerEvents = "none";
   toggleGameoverlayButton.style.transition = `all .2s, opacity .5s`;
 
   soundToggleTooltip.style.transition = `all.2s,width.5s 4s,opacity.5s 4s`;
@@ -336,9 +379,9 @@ const gameoverToMenu = () => {
   gridRedToggleButton.style.transition = `all.2s,width.5s 4s,opacity.5s 4s`;
   gridToggleButton.style.transition = `all.2s,width.5s 4s,opacity.5s 4s`;
 
-  soundToggleTooltip.style.width = '96px';
-  gridRedToggleTooltip.style.width = '96px';
-  gridToggleTooltip.style.width = '96px';
+  soundToggleTooltip.style.width = "96px";
+  gridRedToggleTooltip.style.width = "96px";
+  gridToggleTooltip.style.width = "96px";
   soundToggleTooltip.style.opacity = 1;
   gridRedToggleTooltip.style.opacity = 1;
   gridToggleTooltip.style.opacity = 1;
@@ -365,7 +408,7 @@ const gameoverToMenu = () => {
     renderCount = 0;
     clearLayers();
     hideGameover();
-    svgElement.style.transform = '';
+    svgElement.style.transform = "";
     pathTilesIndicatorCount.innerText = inventory.paths;
 
     setTimeout(() => {
@@ -383,7 +426,7 @@ const toggleGameoverlay = () => {
     showGameover();
   } else {
     gameOverlayHidden = true;
-    svgElement.style.transform = '';
+    svgElement.style.transform = "";
     hideGameover();
   }
 };
@@ -396,7 +439,7 @@ initPointer();
 const startGame = () => {
   if (!gameStarted) {
     svgElement.style.transition = `transform 2s`;
-    svgElement.style.transform = '';
+    svgElement.style.transform = "";
     pathTilesIndicatorCount.innerText = inventory.paths;
     hideMenu();
     gameStarted = true;
@@ -425,12 +468,12 @@ const togglePause = () => {
   if (gameStarted && totalUpdateCount > 210) {
     if (loop.isStopped) {
       loop.start();
-      pauseSvgPath.setAttribute('d', 'M6 6 6 10M10 6 10 8 10 10');
-      pauseSvgPath.style.transform = 'rotate(180deg)';
+      pauseSvgPath.setAttribute("d", "M6 6 6 10M10 6 10 8 10 10");
+      pauseSvgPath.style.transform = "rotate(180deg)";
     } else {
       loop.stop();
-      pauseSvgPath.setAttribute('d', 'M7 6 7 10M7 6 10 8 7 10');
-      pauseSvgPath.style.transform = 'rotate(0)';
+      pauseSvgPath.setAttribute("d", "M7 6 7 10M7 6 10 8 7 10");
+      pauseSvgPath.style.transform = "rotate(0)";
     }
   }
 };
@@ -440,16 +483,16 @@ const toggleSound = () => {
 
   if (soundSetings.on) {
     soundSetings.on = false;
-    localStorage.setItem('Tiny Yurtss', false);
-    soundToggleSvgPathX.setAttribute('d', 'M11 7Q10 8 9 9M9 7Q10 8 11 9');
+    localStorage.setItem("Tiny Yurtss", false);
+    soundToggleSvgPathX.setAttribute("d", "M11 7Q10 8 9 9M9 7Q10 8 11 9");
     soundToggleSvgPathX.style.stroke = colors.red;
-    soundToggleTooltip.innerHTML = 'Sound: <u>Off';
+    soundToggleTooltip.innerHTML = "Sound: <u>Off";
   } else {
     soundSetings.on = true;
-    localStorage.setItem('Tiny Yurtss', true);
-    soundToggleSvgPathX.setAttribute('d', 'M10 6Q12 8 10 10M10 6Q12 8 10 10');
+    localStorage.setItem("Tiny Yurtss", true);
+    soundToggleSvgPathX.setAttribute("d", "M10 6Q12 8 10 10M10 6Q12 8 10 10");
     soundToggleSvgPathX.style.stroke = colors.ui;
-    soundToggleTooltip.innerHTML = 'Sound: <u>On';
+    soundToggleTooltip.innerHTML = "Sound: <u>On";
   }
 
   // This returns before playing if soundSettings.on === false
@@ -458,33 +501,35 @@ const toggleSound = () => {
 };
 
 if (soundSetings.on) {
-  soundToggleSvgPathX.setAttribute('d', 'M10 6Q12 8 10 10M10 6Q12 8 10 10');
+  soundToggleSvgPathX.setAttribute("d", "M10 6Q12 8 10 10M10 6Q12 8 10 10");
   soundToggleSvgPathX.style.stroke = colors.ui;
-  soundToggleTooltip.innerHTML = 'Sound: <u>On';
+  soundToggleTooltip.innerHTML = "Sound: <u>On";
 } else {
-  soundToggleSvgPathX.setAttribute('d', 'M11 7Q10 8 9 9M9 7Q10 8 11 9');
+  soundToggleSvgPathX.setAttribute("d", "M11 7Q10 8 9 9M9 7Q10 8 11 9");
   soundToggleSvgPathX.style.stroke = colors.red;
-  soundToggleTooltip.innerHTML = 'Sound: <u>Off';
+  soundToggleTooltip.innerHTML = "Sound: <u>Off";
 }
 
-pauseButton.addEventListener('click', togglePause);
-gridRedToggleButton.addEventListener('click', gridRedLockToggle);
-gridToggleButton.addEventListener('click', gridLockToggle);
-soundToggleButton.addEventListener('click', toggleSound);
-soundToggleTooltip.addEventListener('click', () => soundToggleButton.click());
-gridRedToggleTooltip.addEventListener('click', () => gridRedToggleButton.click());
-gridToggleTooltip.addEventListener('click', () => gridToggleButton.click());
+pauseButton.addEventListener("click", togglePause);
+gridRedToggleButton.addEventListener("click", gridRedLockToggle);
+gridToggleButton.addEventListener("click", gridLockToggle);
+soundToggleButton.addEventListener("click", toggleSound);
+soundToggleTooltip.addEventListener("click", () => soundToggleButton.click());
+gridRedToggleTooltip.addEventListener("click", () =>
+  gridRedToggleButton.click(),
+);
+gridToggleTooltip.addEventListener("click", () => gridToggleButton.click());
 
-document.addEventListener('keypress', (event) => {
-  if (event.key === ' ') {
+document.addEventListener("keypress", (event) => {
+  if (event.key === " ") {
     // Prevent double-toggling by having the button be focused when pressing space
     if (event.target !== pauseButton) {
       togglePause();
     }
 
     // Simulate :active styles
-    pauseButton.style.transform = 'scale(.95)';
-    setTimeout(() => pauseButton.style.transform = '', 150);
+    pauseButton.style.transform = "scale(.95)";
+    setTimeout(() => (pauseButton.style.transform = ""), 150);
   }
 
   // initAudio();

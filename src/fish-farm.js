@@ -1,7 +1,7 @@
 // import { Ox } from './ox';
-import { Farm } from './farm';
-import { Fish } from './fish';
-import { colors } from './colors';
+import { Farm } from "./farm";
+import { Fish } from "./fish";
+import { colors } from "./colors";
 
 export const fishFarms = [];
 
@@ -9,7 +9,7 @@ export class FishFarm extends Farm {
   constructor(properties) {
     super({
       ...properties,
-      fenceColor: '#eee',
+      fenceColor: "#eee",
       width: 2,
       height: 2,
     });
@@ -26,7 +26,7 @@ export class FishFarm extends Farm {
     setTimeout(() => this.addAnimal({}), 4000 + (properties.delay ?? 0));
     this.numAnimals = 5;
     this.appearing = true;
-    setTimeout(() => this.appearing = false, 3000);
+    setTimeout(() => (this.appearing = false), 3000);
   }
 
   upgrade() {
@@ -52,10 +52,12 @@ export class FishFarm extends Farm {
   }
 
   addAnimal({ isBaby = false }) {
-    super.addAnimal(new Fish({
-      parent: this,
-      isBaby,
-    }));
+    super.addAnimal(
+      new Fish({
+        parent: this,
+        isBaby,
+      }),
+    );
   }
 
   update(gameStarted, updateCount) {

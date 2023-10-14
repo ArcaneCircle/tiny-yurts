@@ -1,4 +1,4 @@
-import Updatable from './updatable';
+import Updatable from "./updatable";
 
 /**
  * This is the Kontra.js GameObject, with canvas/context and more ripped out
@@ -18,7 +18,7 @@ class GameObject extends Updatable {
     super.init({
       width,
       height,
-      ...props
+      ...props,
     });
 
     this.addChild(children);
@@ -35,18 +35,18 @@ class GameObject extends Updatable {
    */
   update(dt) {
     this._uf(dt);
-    this.children.map(child => child.update && child.update(dt));
+    this.children.map((child) => child.update && child.update(dt));
   }
 
   render() {
     this._rf();
 
     let children = this.children;
-    children.map(child => child.render && child.render());
+    children.map((child) => child.render && child.render());
   }
 
   _pc() {
-    this.children.map(child => child._pc());
+    this.children.map((child) => child._pc());
   }
 
   get x() {
@@ -99,7 +99,7 @@ class GameObject extends Updatable {
   }
 
   addChild(...objects) {
-    objects.flat().map(child => {
+    objects.flat().map((child) => {
       this.children.push(child);
       child.parent = this;
       child._pc = child._pc || noop;

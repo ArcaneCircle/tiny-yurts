@@ -1,10 +1,10 @@
-import { angleToTarget, radToDeg, Vector } from 'kontra';
-import { Animal } from './animal';
-import { animalLayer, animalShadowLayer } from './layers';
-import { colors } from './colors';
-import { gridCellSize } from './svg';
-import { createSvgElement } from './svg-utils';
-import { oxCounter, oxCounterWrapper } from './ui';
+import { angleToTarget, radToDeg, Vector } from "kontra";
+import { Animal } from "./animal";
+import { animalLayer, animalShadowLayer } from "./layers";
+import { colors } from "./colors";
+import { gridCellSize } from "./svg";
+import { createSvgElement } from "./svg-utils";
+import { oxCounter, oxCounterWrapper } from "./ui";
 
 export const oxen = [];
 
@@ -26,52 +26,52 @@ export class Ox extends Animal {
   addToSvg() {
     this.scale = 0;
 
-    const ox = createSvgElement('g');
-    ox.style.transformOrigin = 'center';
-    ox.style.transformBox = 'fill-box';
+    const ox = createSvgElement("g");
+    ox.style.transformOrigin = "center";
+    ox.style.transformBox = "fill-box";
     ox.style.transition = `all 1s`;
-    ox.style.willChange = 'transform';
+    ox.style.willChange = "transform";
     this.svgElement = ox;
     animalLayer.prepend(ox);
 
-    const body = createSvgElement('rect');
-    body.setAttribute('fill', colors.ox);
-    body.setAttribute('width', this.width);
-    body.setAttribute('height', this.height);
-    body.setAttribute('rx', this.roundness);
+    const body = createSvgElement("rect");
+    body.setAttribute("fill", colors.ox);
+    body.setAttribute("width", this.width);
+    body.setAttribute("height", this.height);
+    body.setAttribute("rx", this.roundness);
     ox.append(body);
 
-    const horns = createSvgElement('path');
-    horns.setAttribute('fill', 'none');
-    horns.setAttribute('stroke', colors.oxHorn);
-    horns.setAttribute('width', this.width);
-    horns.setAttribute('height', this.height);
-    horns.setAttribute('d', 'M0 2Q0 1 1 1Q2 1 2 2');
-    horns.setAttribute('transform', 'translate(-0.2 .6)');
-    horns.setAttribute('stroke-width', 0.4);
+    const horns = createSvgElement("path");
+    horns.setAttribute("fill", "none");
+    horns.setAttribute("stroke", colors.oxHorn);
+    horns.setAttribute("width", this.width);
+    horns.setAttribute("height", this.height);
+    horns.setAttribute("d", "M0 2Q0 1 1 1Q2 1 2 2");
+    horns.setAttribute("transform", "translate(-0.2 .6)");
+    horns.setAttribute("stroke-width", 0.4);
     if (this.isBaby) {
       horns.style.transition = `all 1s`;
-      horns.style.willChange = 'opacity';
+      horns.style.willChange = "opacity";
       horns.style.opacity = 0;
     }
     this.svgHorns = horns;
     ox.append(horns);
 
-    const shadow = createSvgElement('rect');
-    shadow.setAttribute('width', this.width);
-    shadow.setAttribute('height', this.height);
-    shadow.setAttribute('rx', this.roundness);
-    shadow.style.transformOrigin = 'center';
-    shadow.style.transformBox = 'fill-box';
+    const shadow = createSvgElement("rect");
+    shadow.setAttribute("width", this.width);
+    shadow.setAttribute("height", this.height);
+    shadow.setAttribute("rx", this.roundness);
+    shadow.style.transformOrigin = "center";
+    shadow.style.transformBox = "fill-box";
     shadow.style.transition = `all 1s`;
-    shadow.style.willChange = 'transform';
+    shadow.style.willChange = "transform";
     this.svgShadowElement = shadow;
     animalShadowLayer.prepend(shadow);
 
     this.render();
 
-    oxCounterWrapper.style.width = '96px';
-    oxCounterWrapper.style.opacity = '1';
+    oxCounterWrapper.style.width = "96px";
+    oxCounterWrapper.style.opacity = "1";
 
     setTimeout(() => {
       this.scale = 1;
@@ -81,10 +81,10 @@ export class Ox extends Animal {
     }, 500);
 
     setTimeout(() => {
-      ox.style.transition = '';
-      ox.style.willChange = '';
-      shadow.style.willChange = '';
-      shadow.style.transition = '';
+      ox.style.transition = "";
+      ox.style.willChange = "";
+      shadow.style.willChange = "";
+      shadow.style.transition = "";
     }, 1500);
   }
 
@@ -123,8 +123,14 @@ export class Ox extends Animal {
         const tooCloseToOtherOxes = this.parent.children.some((o) => {
           if (this === o) return false;
           const otherOxVector = Vector(o);
-          const oldDistToOtherOx = otherOxVector.distance({ x: this.x, y: this.y });
-          const newDistToOtherOx = otherOxVector.distance({ x: newPosX, y: newPosY });
+          const oldDistToOtherOx = otherOxVector.distance({
+            x: this.x,
+            y: this.y,
+          });
+          const newDistToOtherOx = otherOxVector.distance({
+            x: newPosX,
+            y: newPosY,
+          });
           return newDistToOtherOx < 4 && newDistToOtherOx < oldDistToOtherOx;
         });
         if (!tooCloseToOtherOxes) {

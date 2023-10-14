@@ -1,12 +1,12 @@
-import { Vector } from 'kontra';
-import { GameObjectClass } from './modified-kontra/game-object';
-import { createSvgElement } from './svg-utils';
-import { gridCellSize } from './svg';
-import { colors } from './colors';
-import { personLayer, yurtAndPersonShadowLayer } from './layers';
-import { findRoute } from './find-route';
-import { rotateVector, combineVectors } from './vector';
-import { shuffle } from './shuffle';
+import { Vector } from "kontra";
+import { GameObjectClass } from "./modified-kontra/game-object";
+import { createSvgElement } from "./svg-utils";
+import { gridCellSize } from "./svg";
+import { colors } from "./colors";
+import { personLayer, yurtAndPersonShadowLayer } from "./layers";
+import { findRoute } from "./find-route";
+import { rotateVector, combineVectors } from "./vector";
+import { shuffle } from "./shuffle";
 
 export const people = [];
 
@@ -34,17 +34,17 @@ export class Person extends GameObjectClass {
     const { x } = this;
     const { y } = this;
 
-    const person = createSvgElement('path');
-    person.setAttribute('d', 'M0 0 0 0');
-    person.setAttribute('transform', `translate(${x},${y})`);
-    person.setAttribute('stroke', this.type);
+    const person = createSvgElement("path");
+    person.setAttribute("d", "M0 0 0 0");
+    person.setAttribute("transform", `translate(${x},${y})`);
+    person.setAttribute("stroke", this.type);
     personLayer.append(person);
     this.svgElement = person;
 
-    const shadow = createSvgElement('path');
-    shadow.setAttribute('stroke-width', 1.2);
-    shadow.setAttribute('d', 'M0 0 .3 .3');
-    shadow.setAttribute('transform', `translate(${x},${y})`);
+    const shadow = createSvgElement("path");
+    shadow.setAttribute("stroke-width", 1.2);
+    shadow.setAttribute("d", "M0 0 .3 .3");
+    shadow.setAttribute("transform", `translate(${x},${y})`);
     yurtAndPersonShadowLayer.append(shadow);
     this.shadowElement = shadow;
   }
@@ -55,8 +55,8 @@ export class Person extends GameObjectClass {
     const { x } = this;
     const { y } = this;
 
-    this.svgElement.setAttribute('transform', `translate(${x},${y})`);
-    this.shadowElement.setAttribute('transform', `translate(${x},${y})`);
+    this.svgElement.setAttribute("transform", `translate(${x},${y})`);
+    this.shadowElement.setAttribute("transform", `translate(${x},${y})`);
   }
 
   update() {
@@ -76,21 +76,28 @@ export class Person extends GameObjectClass {
       if (this.atFarm === 2 && this.farmToVisit.type === colors.fish) {
         // TODO: Give the "bob up to surface" function to the farm or the fish
         // eslint-disable-next-line max-len, no-param-reassign
-        shuffle(this.farmToVisit.children).forEach((fish, i) => setTimeout(() => fish.svgBody.style.fill = colors.fish, i * 250));
+        shuffle(this.farmToVisit.children).forEach((fish, i) =>
+          setTimeout(() => (fish.svgBody.style.fill = colors.fish), i * 250),
+        );
       }
 
       // After this many updates, go home
       // TODO: Make sensible number, show some sort of animation
       // originatlRoute.length counts every cell including yurt & farm
       if (
-        (this.atFarm > 80 && this.originalRoute.length > 3)
-        || (this.atFarm > 120 && this.originalRoute.length > 2)
-        || this.atFarm > 160
+        (this.atFarm > 80 && this.originalRoute.length > 3) ||
+        (this.atFarm > 120 && this.originalRoute.length > 2) ||
+        this.atFarm > 160
       ) {
         if (this.farmToVisit.type === colors.fish) {
           // TODO: Give the "bob up to surface" function to the farm or the fish
           // eslint-disable-next-line max-len, no-param-reassign
-          shuffle(this.farmToVisit.children).forEach((fish, i) => setTimeout(() => fish.svgBody.style.fill = colors.shade2, 1000 + i * 1000));
+          shuffle(this.farmToVisit.children).forEach((fish, i) =>
+            setTimeout(
+              () => (fish.svgBody.style.fill = colors.shade2),
+              1000 + i * 1000,
+            ),
+          );
         }
 
         // Go back home. If no route is found, errrr dunno?
@@ -99,10 +106,12 @@ export class Person extends GameObjectClass {
             x: this.destination.x, // from before
             y: this.destination.y,
           },
-          to: [{
-            x: this.parent.x,
-            y: this.parent.y,
-          }],
+          to: [
+            {
+              x: this.parent.x,
+              y: this.parent.y,
+            },
+          ],
         });
 
         if (route?.length) {
@@ -146,8 +155,8 @@ export class Person extends GameObjectClass {
 
           if (this.route.length === 1) {
             if (
-              Math.abs(this.x - firstRoutePoint.x) < closeEnoughDestination
-              && Math.abs(this.y - firstRoutePoint.y) < closeEnoughDestination
+              Math.abs(this.x - firstRoutePoint.x) < closeEnoughDestination &&
+              Math.abs(this.y - firstRoutePoint.y) < closeEnoughDestination
             ) {
               if (this.goingHome) {
                 // TODO: Have like 2 variables for atHome/atFarm/goingHome/goingFarm
@@ -156,8 +165,10 @@ export class Person extends GameObjectClass {
               } else {
                 this.atFarm = 1;
                 this.farmToVisit.demand -= this.farmToVisit.needyness;
-                this.farmToVisit.assignedPeople
-                  .splice(this.farmToVisit.assignedPeople.indexOf(this), 1);
+                this.farmToVisit.assignedPeople.splice(
+                  this.farmToVisit.assignedPeople.indexOf(this),
+                  1,
+                );
                 // this.farmToVisit.hideWarn();
                 // this.animalToVisit.hasPerson = false;
               }
@@ -165,8 +176,8 @@ export class Person extends GameObjectClass {
               return;
             }
           } else if (
-            Math.abs(this.x - firstRoutePoint.x) < closeEnough
-              && Math.abs(this.y - firstRoutePoint.y) < closeEnough
+            Math.abs(this.x - firstRoutePoint.x) < closeEnough &&
+            Math.abs(this.y - firstRoutePoint.y) < closeEnough
           ) {
             this.route.shift();
             return;
@@ -208,21 +219,31 @@ export class Person extends GameObjectClass {
     // Is currently travelling?
     // could check velocity instead?
     if (this.route?.length > 0) {
-      const potentialCollisionPeople = people
-        .filter((otherPerson) => otherPerson !== this && !otherPerson.atHome);
+      const potentialCollisionPeople = people.filter(
+        (otherPerson) => otherPerson !== this && !otherPerson.atHome,
+      );
 
       potentialCollisionPeople.forEach((otherPerson) => {
         const distanceBetween = otherPerson.position.distance(this.position);
-        const nextDistanceBetween = otherPerson.position.distance(this.position.add(this.velocity));
+        const nextDistanceBetween = otherPerson.position.distance(
+          this.position.add(this.velocity),
+        );
 
         if (nextDistanceBetween < distanceBetween) {
           if (nextDistanceBetween < avoidanceDistance) {
             // TODO: Turn left or right depending on what makes most sense
-            const vectorBetweenPeople = this.position.subtract(otherPerson.position);
+            const vectorBetweenPeople = this.position.subtract(
+              otherPerson.position,
+            );
             const normalBetweenPeople = vectorBetweenPeople.normalize();
-            const turnLeftVector = rotateVector(normalBetweenPeople, (Math.PI / 2));
+            const turnLeftVector = rotateVector(
+              normalBetweenPeople,
+              Math.PI / 2,
+            );
             const turnLeftVectorScaled = turnLeftVector.scale(turnyness);
-            this.velocity.set(combineVectors(this.velocity, turnLeftVectorScaled));
+            this.velocity.set(
+              combineVectors(this.velocity, turnLeftVectorScaled),
+            );
           }
         }
 
@@ -230,7 +251,10 @@ export class Person extends GameObjectClass {
           this.position.add(this.velocity),
         );
 
-        if (nextDistanceBetween < slowyDistance && this.velocity.length() > 0.06) {
+        if (
+          nextDistanceBetween < slowyDistance &&
+          this.velocity.length() > 0.06
+        ) {
           if (newNextDistanceBetween < distanceBetween) {
             if (nextDistanceBetween < avoidanceDistance) {
               this.dx *= 0.86;

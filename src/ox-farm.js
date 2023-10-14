@@ -1,6 +1,6 @@
-import { Ox } from './ox';
-import { Farm } from './farm';
-import { colors } from './colors';
+import { Ox } from "./ox";
+import { Farm } from "./farm";
+import { colors } from "./colors";
 
 export const oxFarms = [];
 
@@ -23,7 +23,7 @@ export class OxFarm extends Farm {
     setTimeout(() => this.addAnimal({ isBaby }), 4000 + properties.delay ?? 0);
     this.numAnimals = 3;
     this.appearing = true;
-    setTimeout(() => this.appearing = false, 3000);
+    setTimeout(() => (this.appearing = false), 3000);
   }
 
   upgrade() {
@@ -36,19 +36,28 @@ export class OxFarm extends Farm {
 
     // 3 parents 2 babies each upgrade
     for (let i = 0; i < this.children.filter((c) => !c.isBaby).length; i++) {
-      setTimeout(() => this.children.filter((c) => !c.isBaby)[i].showLove(), i * 1000);
-      setTimeout(() => this.children.filter((c) => !c.isBaby)[i].hideLove(), 7000);
-      if (i) setTimeout(() => this.addAnimal({ isBaby: true }), i * 1000 + 7000);
+      setTimeout(
+        () => this.children.filter((c) => !c.isBaby)[i].showLove(),
+        i * 1000,
+      );
+      setTimeout(
+        () => this.children.filter((c) => !c.isBaby)[i].hideLove(),
+        7000,
+      );
+      if (i)
+        setTimeout(() => this.addAnimal({ isBaby: true }), i * 1000 + 7000);
     }
 
     return true;
   }
 
   addAnimal({ isBaby = false }) {
-    super.addAnimal(new Ox({
-      parent: this,
-      isBaby,
-    }));
+    super.addAnimal(
+      new Ox({
+        parent: this,
+        isBaby,
+      }),
+    );
   }
 
   update(gameStarted, updateCount) {

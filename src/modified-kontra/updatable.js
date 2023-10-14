@@ -1,4 +1,4 @@
-import { Vector } from 'kontra';
+import { Vector } from "kontra";
 
 /**
  * This is the Kontra.js Updatable object, which GameObject extends.

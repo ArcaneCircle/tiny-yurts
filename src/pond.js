@@ -1,7 +1,7 @@
-import { createSvgElement } from './svg-utils';
-import { getOutlinePoints } from './hull';
-import { pondLayer } from './layers';
-import { gridCellSize } from './svg';
+import { createSvgElement } from "./svg-utils";
+import { getOutlinePoints } from "./hull";
+import { pondLayer } from "./layers";
+import { gridCellSize } from "./svg";
 
 export const ponds = [];
 
@@ -24,9 +24,7 @@ const createPondShape = (width, height) => {
   return createPondShape(width, height);
 };
 
-export const spawnPond = ({
-  width, height, x, y,
-}) => {
+export const spawnPond = ({ width, height, x, y }) => {
   let points = createPondShape(width, height);
   const avoidancePoints = [];
 
@@ -48,45 +46,63 @@ export const spawnPond = ({
   }
 
   ponds.push({
-    width, height, x, y, points, avoidancePoints,
+    width,
+    height,
+    x,
+    y,
+    points,
+    avoidancePoints,
   });
 
   const outline = getOutlinePoints(points);
 
-  const pondSvg = createSvgElement('path');
-  pondSvg.setAttribute('fill', '#69b');
-  const d = outline.reduce((acc, curr, index) => {
-    // const pondDot = createSvgElement('circle');
-    // pondDot.style.transform = `translate(${x}px,${y}px)`;
-    // pondDot.setAttribute('r', 1);
-    // pondDot.setAttribute('fill', ['red', 'blue', 'green', 'yellow', 'black', 'white'][index]);
-    // svgElement.append(pondDot);
+  const pondSvg = createSvgElement("path");
+  pondSvg.setAttribute("fill", "#69b");
+  const d = outline.reduce(
+    (acc, curr, index) => {
+      // const pondDot = createSvgElement('circle');
+      // pondDot.style.transform = `translate(${x}px,${y}px)`;
+      // pondDot.setAttribute('r', 1);
+      // pondDot.setAttribute('fill', ['red', 'blue', 'green', 'yellow', 'black', 'white'][index]);
+      // svgElement.append(pondDot);
 
-    const next = outline.at((index + 1) % outline.length);
-    // console.log(index % outline.length);
-    const end = {
-      x: curr.x + ((next.x - curr.x) / 2),
-      y: curr.y + ((next.y - curr.y) / 2),
-    };
+      const next = outline.at((index + 1) % outline.length);
+      // console.log(index % outline.length);
+      const end = {
+        x: curr.x + (next.x - curr.x) / 2,
+        y: curr.y + (next.y - curr.y) / 2,
+      };
 
-    return `${acc} ${gridCellSize / 2 + curr.x * gridCellSize} ${gridCellSize / 2 + curr.y * gridCellSize} ${gridCellSize / 2 + end.x * gridCellSize} ${gridCellSize / 2 + end.y * gridCellSize}`;
-  }, `M${gridCellSize / 2 + (outline[0].x + ((outline.at(-1).x - outline[0].x) / 2)) * gridCellSize} ${gridCellSize / 2 + (outline[0].y + ((outline.at(-1).y - outline[0].y) / 2)) * gridCellSize}Q`);
+      return `${acc} ${gridCellSize / 2 + curr.x * gridCellSize} ${
+        gridCellSize / 2 + curr.y * gridCellSize
+      } ${gridCellSize / 2 + end.x * gridCellSize} ${
+        gridCellSize / 2 + end.y * gridCellSize
+      }`;
+    },
+    `M${
+      gridCellSize / 2 +
+      (outline[0].x + (outline.at(-1).x - outline[0].x) / 2) * gridCellSize
+    } ${
+      gridCellSize / 2 +
+      (outline[0].y + (outline.at(-1).y - outline[0].y) / 2) * gridCellSize
+    }Q`,
+  );
 
-  pondSvg.setAttribute('d', `${d}Z`);
-  pondSvg.setAttribute('stroke-width', 4);
-  pondSvg.setAttribute('stroke-linejoin', 'round');
-  pondSvg.setAttribute('stroke', '#6ab');
+  pondSvg.setAttribute("d", `${d}Z`);
+  pondSvg.setAttribute("stroke-width", 4);
+  pondSvg.setAttribute("stroke-linejoin", "round");
+  pondSvg.setAttribute("stroke", "#6ab");
 
-  const pondShadeSvg = createSvgElement('path');
-  pondShadeSvg.setAttribute('fill', '#7bc');
-  pondShadeSvg.setAttribute('d', `${d}Z`);
-  pondShadeSvg.setAttribute('stroke', '#7bc');
-  pondShadeSvg.style.filter = 'blur(2px)';
+  const pondShadeSvg = createSvgElement("path");
+  pondShadeSvg.setAttribute("fill", "#7bc");
+  pondShadeSvg.setAttribute("d", `${d}Z`);
+  pondShadeSvg.setAttribute("stroke", "#7bc");
+  pondShadeSvg.style.filter = "blur(2px)";
 
-  const pondEdgeSvg = createSvgElement('path');
-  pondEdgeSvg.setAttribute('d', `${d}Z`);
-  pondEdgeSvg.setAttribute('stroke-width', 6);
-  pondEdgeSvg.setAttribute('stroke', '#9b6');
+  const pondEdgeSvg = createSvgElement("path");
+  pondEdgeSvg.setAttribute("d", `${d}Z`);
+  pondEdgeSvg.setAttribute("stroke-width", 6);
+  pondEdgeSvg.setAttribute("stroke", "#9b6");
 
   pondLayer.append(pondEdgeSvg, pondSvg, pondShadeSvg);
 };

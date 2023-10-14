@@ -1,10 +1,10 @@
-import { angleToTarget, radToDeg, Vector } from 'kontra';
-import { Animal } from './animal';
-import { animalLayer, animalShadowLayer } from './layers';
-import { colors } from './colors';
-import { gridCellSize } from './svg';
-import { createSvgElement } from './svg-utils';
-import { goatCounter, goatCounterWrapper } from './ui';
+import { angleToTarget, radToDeg, Vector } from "kontra";
+import { Animal } from "./animal";
+import { animalLayer, animalShadowLayer } from "./layers";
+import { colors } from "./colors";
+import { gridCellSize } from "./svg";
+import { createSvgElement } from "./svg-utils";
+import { goatCounter, goatCounterWrapper } from "./ui";
 
 export const goats = [];
 
@@ -26,36 +26,36 @@ export class Goat extends Animal {
   addToSvg() {
     this.scale = 0;
 
-    const goat = createSvgElement('g');
-    goat.style.transformOrigin = 'center';
-    goat.style.transformBox = 'fill-box';
+    const goat = createSvgElement("g");
+    goat.style.transformOrigin = "center";
+    goat.style.transformBox = "fill-box";
     goat.style.transition = `all 1s`;
-    goat.style.willChange = 'transform';
+    goat.style.willChange = "transform";
     this.svgElement = goat;
     animalLayer.prepend(goat);
 
-    const body = createSvgElement('rect');
-    body.setAttribute('fill', colors.goat);
-    body.setAttribute('width', this.width);
-    body.setAttribute('height', this.height);
-    body.setAttribute('rx', this.roundness);
+    const body = createSvgElement("rect");
+    body.setAttribute("fill", colors.goat);
+    body.setAttribute("width", this.width);
+    body.setAttribute("height", this.height);
+    body.setAttribute("rx", this.roundness);
     goat.append(body);
 
-    const shadow = createSvgElement('rect');
-    shadow.setAttribute('width', this.width);
-    shadow.setAttribute('height', this.height);
-    shadow.setAttribute('rx', this.roundness);
-    shadow.style.transformOrigin = 'center';
-    shadow.style.transformBox = 'fill-box';
+    const shadow = createSvgElement("rect");
+    shadow.setAttribute("width", this.width);
+    shadow.setAttribute("height", this.height);
+    shadow.setAttribute("rx", this.roundness);
+    shadow.style.transformOrigin = "center";
+    shadow.style.transformBox = "fill-box";
     shadow.style.transition = `all 1s`;
-    shadow.style.willChange = 'transform';
+    shadow.style.willChange = "transform";
     this.svgShadowElement = shadow;
     animalShadowLayer.prepend(shadow);
 
     this.render();
 
-    goatCounterWrapper.style.width = '96px';
-    goatCounterWrapper.style.opacity = '1';
+    goatCounterWrapper.style.width = "96px";
+    goatCounterWrapper.style.opacity = "1";
 
     setTimeout(() => {
       this.scale = 1;
@@ -63,10 +63,10 @@ export class Goat extends Animal {
     }, 500);
 
     setTimeout(() => {
-      goat.style.transition = '';
-      goat.style.willChange = '';
-      shadow.style.willChange = '';
-      shadow.style.transition = '';
+      goat.style.transition = "";
+      goat.style.willChange = "";
+      shadow.style.willChange = "";
+      shadow.style.transition = "";
     }, 1500);
   }
 
@@ -101,8 +101,14 @@ export class Goat extends Animal {
         const tooCloseToOtherOxes = this.parent.children.some((o) => {
           if (this === o) return false;
           const otherOxVector = Vector(o);
-          const oldDistToOtherOx = otherOxVector.distance({ x: this.x, y: this.y });
-          const newDistToOtherOx = otherOxVector.distance({ x: newPosX, y: newPosY });
+          const oldDistToOtherOx = otherOxVector.distance({
+            x: this.x,
+            y: this.y,
+          });
+          const newDistToOtherOx = otherOxVector.distance({
+            x: newPosX,
+            y: newPosY,
+          });
           return newDistToOtherOx < 4 && newDistToOtherOx < oldDistToOtherOx;
         });
         if (!tooCloseToOtherOxes) {

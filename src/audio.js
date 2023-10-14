@@ -1,5 +1,5 @@
 /* eslint-disable array-bracket-spacing */
-import { colors } from './colors';
+import { colors } from "./colors";
 
 // This must only be called on user interaction. So probably on pressing a
 // main menu button? But we don't want to re-do it er ever as well hrm
@@ -10,7 +10,7 @@ let audioContext;
 const sampleRate = 44100;
 
 export const soundSetings = {
-  on: localStorage.getItem('Tiny Yurtss') !== 'false',
+  on: localStorage.getItem("Tiny Yurtss") !== "false",
 };
 
 export const initAudio = () => {
@@ -33,7 +33,7 @@ export const playSound = (
   lowpassFrequency = 10000,
   // Most sound above this frequency (Hz) goes through
   highpassFrequency = 100,
-  noise = () => (2 * Math.random() - 1),
+  noise = () => 2 * Math.random() - 1,
 ) => {
   if (!soundSetings.on) return;
 
@@ -49,30 +49,28 @@ export const playSound = (
     reset = false;
     return v.length <= 1 + Math.floor(period)
       ? (v.push(noise()), v.at(-1))
-      : (
-        v[p] = (
-          v[p >= v.length - 1 ? 0 : p + 1] * 0.5 + v[p] * (0.5 - (pingyness / 1000))
+      : ((v[p] =
+          v[p >= v.length - 1 ? 0 : p + 1] * 0.5 +
+          v[p] * (0.5 - pingyness / 1000)),
           // v[p >= v.length - 1 ? 0 : p + 1]
-        ),
-        p >= Math.floor(period) && (
-          reset = true, v[p + 1] = (v[0] * 0.5 + v[p + 1] * 0.5)
-        ),
-        p = reset ? 0 : p + 1,
-        v[p]
-      );
+        p >= Math.floor(period) &&
+          ((reset = true), (v[p + 1] = v[0] * 0.5 + v[p + 1] * 0.5)),
+        (p = reset ? 0 : p + 1),
+        v[p]);
   };
 
-  for (
-    let i = 0;
-    i < sampleRate * noteLength;
-    i++
-  ) {
-    bufferData[i] = i < 88
-      ? (i / 88) * w()
-      : (1 - (i - 88) / (sampleRate * noteLength)) * w();
+  for (let i = 0; i < sampleRate * noteLength; i++) {
+    bufferData[i] =
+      i < 88
+        ? (i / 88) * w()
+        : (1 - (i - 88) / (sampleRate * noteLength)) * w();
   }
 
-  const buffer = audioContext.createBuffer(1, sampleRate * noteLength, sampleRate);
+  const buffer = audioContext.createBuffer(
+    1,
+    sampleRate * noteLength,
+    sampleRate,
+  );
   buffer.getChannelData(0).set(bufferData);
 
   const source = audioContext.createBufferSource();
@@ -80,17 +78,17 @@ export const playSound = (
   source.playbackRate.value = playbackRate;
 
   const lowpassNode = audioContext.createBiquadFilter();
-  lowpassNode.type = 'lowpass';
+  lowpassNode.type = "lowpass";
   lowpassNode.frequency.value = lowpassFrequency;
 
   // Two low pass filters for more aggressive filtering,
   // without using many more bytes as they're identical
   const lowpassNode2 = audioContext.createBiquadFilter();
-  lowpassNode2.type = 'lowpass';
+  lowpassNode2.type = "lowpass";
   lowpassNode2.frequency.value = lowpassFrequency;
 
   const highpassNode = audioContext.createBiquadFilter();
-  highpassNode.type = 'highpass';
+  highpassNode.type = "highpass";
   highpassNode.frequency.value = highpassFrequency;
 
   const volumeNode = audioContext.createGain();
@@ -144,10 +142,10 @@ const warnNotes = {
       [10, 0.5, 0.5, 30, 0.2, 1800, 200], // A#
       [13, 0.5, 0.5, 30, 0.2, 1800, 200], // C#
 
-      [ 8, 0.5, 0.5, 30, 0.2, 1800, 200], // G# (first one)
+      [8, 0.5, 0.5, 30, 0.2, 1800, 200], // G# (first one)
       [10, 0.5, 0.5, 30, 0.2, 1800, 200], // A#
-      [ 5, 0.5, 0.5, 30, 0.2, 1800, 200], // E# (F)
-      [ 8, 0.5, 0.5, 30, 0.2, 1800, 200], // G#
+      [5, 0.5, 0.5, 30, 0.2, 1800, 200], // E# (F)
+      [8, 0.5, 0.5, 30, 0.2, 1800, 200], // G#
     ],
   },
   [colors.goat]: {

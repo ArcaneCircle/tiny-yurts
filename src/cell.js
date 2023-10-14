@@ -1,10 +1,9 @@
-import {
-  boardWidth, boardOffsetX, boardOffsetY, gridCellSize,
-} from './svg';
-import { gridPointerLayer } from './layers';
+import { boardWidth, boardOffsetX, boardOffsetY, gridCellSize } from "./svg";
+import { gridPointerLayer } from "./layers";
 
 export const getGridCell = (x, y) => {
-  const cellSizePx = gridPointerLayer.getBoundingClientRect().width / boardWidth;
+  const cellSizePx =
+    gridPointerLayer.getBoundingClientRect().width / boardWidth;
 
   return {
     x: Math.floor(x / cellSizePx),
@@ -13,7 +12,8 @@ export const getGridCell = (x, y) => {
 };
 
 export const getBoardCell = (x, y) => {
-  const cellSizePx = gridPointerLayer.getBoundingClientRect().width / boardWidth;
+  const cellSizePx =
+    gridPointerLayer.getBoundingClientRect().width / boardWidth;
 
   return {
     x: boardOffsetX + Math.floor(x / cellSizePx),
@@ -22,7 +22,8 @@ export const getBoardCell = (x, y) => {
 };
 
 export const svgPxToDisplayPx = (x, y) => {
-  const cellSizePx = gridPointerLayer.getBoundingClientRect().width / boardWidth;
+  const cellSizePx =
+    gridPointerLayer.getBoundingClientRect().width / boardWidth;
 
   return {
     x: (boardOffsetX + x) * cellSizePx,
@@ -31,17 +32,19 @@ export const svgPxToDisplayPx = (x, y) => {
 };
 
 export const pointerPxToSvgPx = (x, y) => {
-  const cellSizePx = gridPointerLayer.getBoundingClientRect().width / boardWidth;
+  const cellSizePx =
+    gridPointerLayer.getBoundingClientRect().width / boardWidth;
   const scale = cellSizePx / gridCellSize;
 
   return {
-    x: (boardOffsetX * gridCellSize) + (x / scale),
-    y: (boardOffsetY * gridCellSize) + (y / scale),
+    x: boardOffsetX * gridCellSize + x / scale,
+    y: boardOffsetY * gridCellSize + y / scale,
   };
 };
 
 export const isPastHalfwayInto = ({ pointer, from, to }) => {
-  const cellSizePx = gridPointerLayer.getBoundingClientRect().width / boardWidth;
+  const cellSizePx =
+    gridPointerLayer.getBoundingClientRect().width / boardWidth;
   // TODO: convert from display px to svg px to align with cells better
   const fuzzyness = 4; // In device px, how closish to half way is required
   const xDiff = pointer.x - cellSizePx * (from.x - boardOffsetX + 0.5);

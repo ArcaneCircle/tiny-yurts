@@ -1,11 +1,11 @@
-import { angleToTarget, radToDeg, Vector } from 'kontra';
-import { Animal } from './animal';
+import { angleToTarget, radToDeg, Vector } from "kontra";
+import { Animal } from "./animal";
 // Should fish have shadows?
-import { animalLayer } from './layers';
-import { colors } from './colors';
-import { gridCellSize } from './svg';
-import { createSvgElement } from './svg-utils';
-import { fishCounter, fishCounterWrapper } from './ui';
+import { animalLayer } from "./layers";
+import { colors } from "./colors";
+import { gridCellSize } from "./svg";
+import { createSvgElement } from "./svg-utils";
+import { fishCounter, fishCounterWrapper } from "./ui";
 
 // Yes the plual of fish is fish, not fishes, if it's only one kind of fish
 export const fishes = [];
@@ -27,24 +27,24 @@ export class Fish extends Animal {
   addToSvg() {
     this.scale = 0;
 
-    this.svgElement = createSvgElement('g');
-    this.svgElement.style.transformOrigin = 'center';
-    this.svgElement.style.transformBox = 'fill-box';
+    this.svgElement = createSvgElement("g");
+    this.svgElement.style.transformOrigin = "center";
+    this.svgElement.style.transformBox = "fill-box";
     this.svgElement.style.transition = `all 1s`;
-    this.svgElement.style.willChange = 'transform';
+    this.svgElement.style.willChange = "transform";
     animalLayer.append(this.svgElement);
 
-    this.svgBody = createSvgElement('rect');
-    this.svgBody.setAttribute('fill', colors.fish);
-    this.svgBody.setAttribute('width', this.width);
-    this.svgBody.setAttribute('height', this.height);
-    this.svgBody.setAttribute('rx', this.roundness);
+    this.svgBody = createSvgElement("rect");
+    this.svgBody.setAttribute("fill", colors.fish);
+    this.svgBody.setAttribute("width", this.width);
+    this.svgBody.setAttribute("height", this.height);
+    this.svgBody.setAttribute("rx", this.roundness);
     this.svgBody.style.transition = `fill .2s`;
     this.svgElement.append(this.svgBody);
 
     this.render();
 
-    fishCounterWrapper.style.width = '96px';
+    fishCounterWrapper.style.width = "96px";
     fishCounterWrapper.style.opacity = 1;
 
     setTimeout(() => {
@@ -53,12 +53,12 @@ export class Fish extends Animal {
     }, 500);
 
     setTimeout(() => {
-      this.svgElement.style.transition = '';
-      this.svgElement.style.willChange = '';
+      this.svgElement.style.transition = "";
+      this.svgElement.style.willChange = "";
     }, 1500);
 
     setTimeout(() => {
-      this.svgBody.setAttribute('fill', colors.shade2);
+      this.svgBody.setAttribute("fill", colors.shade2);
     }, 4000);
   }
 
@@ -93,8 +93,14 @@ export class Fish extends Animal {
         const tooCloseToOtherOxes = this.parent.children.some((o) => {
           if (this === o) return false;
           const otherOxVector = Vector(o);
-          const oldDistToOtherOx = otherOxVector.distance({ x: this.x, y: this.y });
-          const newDistToOtherOx = otherOxVector.distance({ x: newPosX, y: newPosY });
+          const oldDistToOtherOx = otherOxVector.distance({
+            x: this.x,
+            y: this.y,
+          });
+          const newDistToOtherOx = otherOxVector.distance({
+            x: newPosX,
+            y: newPosY,
+          });
           return newDistToOtherOx < 4 && newDistToOtherOx < oldDistToOtherOx;
         });
         if (!tooCloseToOtherOxes) {

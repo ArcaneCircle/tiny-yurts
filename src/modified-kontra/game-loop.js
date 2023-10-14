@@ -2,10 +2,7 @@
  * This is the Kontra.js GameLoop, with canvas, context, and blurring ripped out
  * https://github.com/straker/kontra/blob/main/src/gameLoop.js
  */
-export function GameLoop({
-  update,
-  render,
-}) {
+export function GameLoop({ update, render }) {
   // animation variables
   let fps = 60;
   let accumulator = 0;

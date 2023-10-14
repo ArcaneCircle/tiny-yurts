@@ -11,11 +11,8 @@ export const getOutlinePoints = (points) => {
   let leftmost = 0;
   for (let i = 1; i < points.length; i++) {
     if (
-      points[i].y < points[leftmost].y
-      || (
-        points[i].y === points[leftmost].y
-        && points[i].x < points[leftmost].x
-      )
+      points[i].y < points[leftmost].y ||
+      (points[i].y === points[leftmost].y && points[i].x < points[leftmost].x)
     ) {
       leftmost = i;
     }

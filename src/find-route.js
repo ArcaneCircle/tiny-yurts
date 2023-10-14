@@ -1,5 +1,5 @@
-import { paths } from './path';
-import { gridWidth, gridHeight } from './svg';
+import { paths } from "./path";
+import { gridWidth, gridHeight } from "./svg";
 
 let gridData = [];
 
@@ -15,13 +15,11 @@ export const updateGridData = () => {
   paths.forEach((path) => {
     gridData
       .find((d) => d.x === path.points[0].x && d.y === path.points[0].y)
-      .neighbors
-      .push({ x: path.points[1].x, y: path.points[1].y });
+      .neighbors.push({ x: path.points[1].x, y: path.points[1].y });
 
     gridData
       .find((d) => d.x === path.points[1].x && d.y === path.points[1].y)
-      .neighbors
-      .push({ x: path.points[0].x, y: path.points[0].y });
+      .neighbors.push({ x: path.points[0].x, y: path.points[0].y });
   });
 };
 
@@ -42,8 +40,9 @@ const breadthFirstSearch = (currentGridData, from, to) => {
       return path.concat(node);
     }
 
-    const hasVisited = visited
-      .some((visitedNode) => visitedNode.x === node.x && visitedNode.y === node.y);
+    const hasVisited = visited.some(
+      (visitedNode) => visitedNode.x === node.x && visitedNode.y === node.y,
+    );
 
     if (!hasVisited) {
       visited.push(node);
@@ -54,7 +53,10 @@ const breadthFirstSearch = (currentGridData, from, to) => {
       node.neighbors.forEach((neighbor) => {
         if (Math.abs(neighbor.x - node.x) === 1 && neighbor.y === node.y) {
           verticalHorizontalNeighbors.push(neighbor);
-        } else if (Math.abs(neighbor.y - node.y) === 1 && neighbor.x === node.x) {
+        } else if (
+          Math.abs(neighbor.y - node.y) === 1 &&
+          neighbor.x === node.x
+        ) {
           verticalHorizontalNeighbors.push(neighbor);
         } else {
           diagonalNeighbors.push(neighbor);
@@ -63,12 +65,15 @@ const breadthFirstSearch = (currentGridData, from, to) => {
 
       verticalHorizontalNeighbors.forEach((neighbor) => {
         const hasVisitedNeighbor = visited.some(
-          (visitedNode) => visitedNode.x === neighbor.x && visitedNode.y === neighbor.y,
+          (visitedNode) =>
+            visitedNode.x === neighbor.x && visitedNode.y === neighbor.y,
         );
 
         if (!hasVisitedNeighbor) {
           queue.push({
-            node: currentGridData.find((c) => c.x === neighbor.x && c.y === neighbor.y),
+            node: currentGridData.find(
+              (c) => c.x === neighbor.x && c.y === neighbor.y,
+            ),
             path: path.concat({
               ...node,
               distance: 1,
@@ -79,12 +84,15 @@ const breadthFirstSearch = (currentGridData, from, to) => {
 
       diagonalNeighbors.forEach((neighbor) => {
         const hasVisitedNeighbor = visited.some(
-          (visitedNode) => visitedNode.x === neighbor.x && visitedNode.y === neighbor.y,
+          (visitedNode) =>
+            visitedNode.x === neighbor.x && visitedNode.y === neighbor.y,
         );
 
         if (!hasVisitedNeighbor) {
           queue.push({
-            node: currentGridData.find((c) => c.x === neighbor.x && c.y === neighbor.y),
+            node: currentGridData.find(
+              (c) => c.x === neighbor.x && c.y === neighbor.y,
+            ),
             path: path.concat({
               ...node,
               distance: 1.41, // Approx Math.sqrt(2)
@@ -103,11 +111,9 @@ export const findRoute = ({ from, to }) => {
 
   // Convert from and to to actual grid nodes
   const fromNode = gridData.find((c) => c.x === from.x && c.y === from.y);
-  const toNodes = gridData.filter((c) => to.find((f) => c.x === f.x && c.y === f.y));
-
-  return breadthFirstSearch(
-    gridData,
-    fromNode,
-    toNodes,
+  const toNodes = gridData.filter((c) =>
+    to.find((f) => c.x === f.x && c.y === f.y),
   );
+
+  return breadthFirstSearch(gridData, fromNode, toNodes);
 };

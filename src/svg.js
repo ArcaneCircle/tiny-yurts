@@ -1,6 +1,6 @@
-import { colors } from './colors';
-import { createSvgElement } from './svg-utils';
-import { createElement } from './create-element';
+import { colors } from "./colors";
+import { createSvgElement } from "./svg-utils";
+import { createElement } from "./create-element";
 
 export const gridCellSize = 8; // Width & height of a cell, in SVG px
 
@@ -34,8 +34,8 @@ svgContainerElement.style.cssText = `
   overflow: hidden;
   background: ${colors.grass};
 `;
-svgContainerElement.style.width = '100vw';
-svgContainerElement.style.height = '100vh';
+svgContainerElement.style.width = "100vw";
+svgContainerElement.style.height = "100vh";
 document.body.append(svgContainerElement);
 
 export const svgHazardLines = createElement();
@@ -45,11 +45,11 @@ svgHazardLines.style.cssText = `
   display: grid;
   background: repeating-linear-gradient(-55deg, #0001 0 12px, #0000 0 24px);
 `;
-svgHazardLines.style.width = '100vw';
-svgHazardLines.style.height = '100vh';
+svgHazardLines.style.width = "100vw";
+svgHazardLines.style.height = "100vh";
 svgHazardLines.style.opacity = 0;
-svgHazardLines.style.willChange = 'opacity';
-svgHazardLines.style.transition = 'opacity.3s';
+svgHazardLines.style.willChange = "opacity";
+svgHazardLines.style.transition = "opacity.3s";
 
 export const svgHazardLinesRed = createElement();
 // Inlined gridRed color (#f002) to save a few bytes
@@ -58,10 +58,10 @@ svgHazardLinesRed.style.cssText = `
   display: grid;
   background: repeating-linear-gradient(-55deg, #f002 0 12px, #0000 0 24px);
 `;
-svgHazardLinesRed.style.width = '100vw';
-svgHazardLinesRed.style.height = '100vh';
+svgHazardLinesRed.style.width = "100vw";
+svgHazardLinesRed.style.height = "100vh";
 svgHazardLinesRed.style.opacity = 0;
-svgHazardLinesRed.style.willChange = 'opacity';
+svgHazardLinesRed.style.willChange = "opacity";
 svgHazardLinesRed.style.transition = `opacity .3s`;
 
 svgContainerElement.append(svgHazardLines, svgHazardLinesRed);
@@ -74,10 +74,10 @@ svgElement.style.cssText = `
   display: grid;
   touch-action: none;
 `;
-svgElement.setAttribute('viewBox', `0 0 ${gridSvgWidth} ${gridSvgHeight}`);
-svgElement.setAttribute('preserveAspectRatio', 'xMidYMid slice');
-svgElement.style.width = '100vw';
-svgElement.style.height = '100vh';
-svgElement.style.maxHeight = '68vw';
-svgElement.style.maxWidth = '200vh';
+svgElement.setAttribute("viewBox", `0 0 ${gridSvgWidth} ${gridSvgHeight}`);
+svgElement.setAttribute("preserveAspectRatio", "xMidYMid slice");
+svgElement.style.width = "100vw";
+svgElement.style.height = "100vh";
+svgElement.style.maxHeight = "68vw";
+svgElement.style.maxWidth = "200vh";
 svgContainerElement.append(svgElement);
